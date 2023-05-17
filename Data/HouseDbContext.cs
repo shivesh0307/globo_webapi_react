@@ -10,7 +10,7 @@ public class HouseDbContext : DbContext
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
-        options.UseSqlite($"Data Source={Path.Join(path, "houses.db")}");
+        options.UseSqlite($"Data Source={Path.Join(path, "houses2.db")}");
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
