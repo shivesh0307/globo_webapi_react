@@ -32,20 +32,32 @@ app.MapGet("/houses", (IHouseRepository repo) =>
 }).Produces<HouseDto[]>(StatusCodes.Status200OK);
 app.MapGet("/house/{houseID:int}", async (int houseId, IHouseRepository repo) =>
 {
+    // Console.WriteLine("get to house id");
     var house = await repo.Get(houseId);
     if (house == null)
         return Results.Problem($"House with ID {houseId} not found.", statusCode: 404);
     return Results.Ok(house);
 }).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
 
-app.MapPost("/house", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
+app.MapPost("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
+    Console.WriteLine("post to house");
     var newHouse = await repo.Add(dto);
     return Results.Created($"/house/{newHouse.Id}", newHouse);
 
 }).Produces<HouseDetailDto>(StatusCodes.Status201Created);
 
-app.MapPut("/house", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
+/*app.MapPost("/houses", async (HttpRequest Request, IHouseRepository repo) =>
+{
+
+    await repo.GetAll();
+    Console.WriteLine("post hit");
+    Console.WriteLine(Request);
+
+
+});*/
+
+app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
     if (await repo.Get(dto.Id) == null)
         return Results.Problem($"House with id {dto.Id} not found ", statusCode: 404);
