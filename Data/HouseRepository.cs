@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 public interface IHouseRepository
 {
     Task<List<HouseDto>> GetAll();
-    //Task<HouseDetailDto?> Get(int id);
+    Task<HouseDetailDto?> Get(int id);
     // Task<HouseDetailDto> Add(HouseDetailDto house);
     // Task<HouseDetailDto> Update(HouseDetailDto house);
     //    Task Delete(int id);
@@ -13,19 +13,19 @@ public class HouseRepository : IHouseRepository
 {
     private readonly HouseDbContext context;
 
-    /*private static HouseDetailDto EntityToDetailDto(HouseEntity e)
+    private static HouseDetailDto EntityToDetailDto(HouseEntity e)
     {
         return new HouseDetailDto(e.Id, e.Address, e.Country, e.Description, e.Price, e.Photo);
     }
 
-   /* private static void DtoToEntity(HouseDetailDto dto, HouseEntity e)
-    {
-        e.Address = dto.Address;
-        e.Country = dto.Country;
-        e.Description = dto.Description;
-        e.Price = dto.Price;
-       // e.Photo = dto.Photo;
-    }*/
+    /* private static void DtoToEntity(HouseDetailDto dto, HouseEntity e)
+     {
+         e.Address = dto.Address;
+         e.Country = dto.Country;
+         e.Description = dto.Description;
+         e.Price = dto.Price;
+        // e.Photo = dto.Photo;
+     }*/
 
     public HouseRepository(HouseDbContext context)
     {
@@ -37,15 +37,15 @@ public class HouseRepository : IHouseRepository
         return await context.Houses.Select(e => new HouseDto(e.Id, e.Address, e.Country, e.Price)).ToListAsync();
     }
 
-    /*  public async Task<HouseDetailDto?> Get(int id)
-      {
-          var entity = await context.Houses.SingleOrDefaultAsync(h => h.Id == id);
-          if (entity == null)
-              return null;
-          return EntityToDetailDto(entity);
-      }
+    public async Task<HouseDetailDto?> Get(int id)
+    {
+        var entity = await context.Houses.SingleOrDefaultAsync(h => h.Id == id);
+        if (entity == null)
+            return null;
+        return EntityToDetailDto(entity);
+    }
 
-      public async Task<HouseDetailDto> Add(HouseDetailDto dto)
+    /*  public async Task<HouseDetailDto> Add(HouseDetailDto dto)
       {
           var entity = new HouseEntity();
           DtoToEntity(dto, entity);

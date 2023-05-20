@@ -28,9 +28,14 @@ app.UseCors("MyPolicy");
 app.MapGet("/houses", (IHouseRepository repo) =>
 {
     return repo.GetAll();
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+}).Produces<HouseDto[]>(StatusCodes.Status200OK);
+app.MapGet("/house/{houseID:int}", async (int houseId, IHouseRepository repo) =>
+{
+    var house = await repo.Get(houseId);
+    if (house == null)
+        return Results.Problem($"House with ID {houseId} not found.", statusCode: 404);
+    return Results.Ok(house);
+}).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
 
 app.Run();
 
