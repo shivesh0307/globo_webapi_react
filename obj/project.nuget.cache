@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "c8jOxpkjYRfYCPAfeRlqGC05XzoXwnC0b1J6cG48DUDxirbjDAKgD/qI4BuIJs2D4Rd+WkLAKUnTtjgxkF8VMg==",
+  "dgSpecHash": "j3u/Antl3HAQ7hDge3gA3QPYGqlfHD81k2n+FsbOCyZIcCDNvPr61Qj2ra13PeK0z0hqgDqBlM9e4IRXdfbtNA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Shivesh\\Desktop\\repo\\react\\globo\\Api\\Api.csproj",
   "expectedPackageFiles": [
@@ -26,6 +26,7 @@
     "C:\\Users\\Shivesh\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
     "C:\\Users\\Shivesh\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
     "C:\\Users\\Shivesh\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\Shivesh\\.nuget\\packages\\minivalidation\\0.7.4\\minivalidation.0.7.4.nupkg.sha512",
     "C:\\Users\\Shivesh\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
     "C:\\Users\\Shivesh\\.nuget\\packages\\sqlitepclraw.bundle_e_sqlite3\\2.1.4\\sqlitepclraw.bundle_e_sqlite3.2.1.4.nupkg.sha512",
     "C:\\Users\\Shivesh\\.nuget\\packages\\sqlitepclraw.core\\2.1.4\\sqlitepclraw.core.2.1.4.nupkg.sha512",

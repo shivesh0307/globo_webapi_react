@@ -61,6 +61,10 @@
             "microsoft.entityframeworkcore.sqlite": {
               "target": "Package",
               "version": "[7.0.5, )"
+            },
+            "minivalidation": {
+              "target": "Package",
+              "version": "[0.7.4, )"
             }
           },
           "imports": [

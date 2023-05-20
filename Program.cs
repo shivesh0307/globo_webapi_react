@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using MiniValidation;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -41,11 +41,13 @@ app.MapGet("/house/{houseID:int}", async (int houseId, IHouseRepository repo) =>
 
 app.MapPost("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
+    if (!MiniValidator.TryValidate(dto, out var errors))
+        return Results.ValidationProblem(errors);
     Console.WriteLine("post to house");
     var newHouse = await repo.Add(dto);
     return Results.Created($"/house/{newHouse.Id}", newHouse);
 
-}).Produces<HouseDetailDto>(StatusCodes.Status201Created);
+}).ProducesValidationProblem().Produces<HouseDetailDto>(StatusCodes.Status201Created);
 
 /*app.MapPost("/houses", async (HttpRequest Request, IHouseRepository repo) =>
 {
@@ -59,13 +61,15 @@ app.MapPost("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository re
 
 app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
+    if (!MiniValidator.TryValidate(dto, out var errors))
+        return Results.ValidationProblem(errors);
     if (await repo.Get(dto.Id) == null)
         return Results.Problem($"House with id {dto.Id} not found ", statusCode: 404);
 
     var updatedHouse = await repo.Update(dto);
     return Results.Ok(updatedHouse);
 
-}).ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
+}).ProducesValidationProblem().ProducesProblem(404).Produces<HouseDetailDto>(StatusCodes.Status200OK);
 
 app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseRepository repo) =>
       {
