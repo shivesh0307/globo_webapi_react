@@ -40,7 +40,7 @@ app.MapGet("/house/{houseID:int}", async (int houseId, IHouseRepository repo) =>
 
 app.MapPost("/house", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
-    var newHouse = await repo.add(dto);
+    var newHouse = await repo.Add(dto);
     return Results.Created($"/house/{newHouse.Id}", newHouse);
 
 }).Produces<HouseDetailDto>(StatusCodes.Status201Created);
