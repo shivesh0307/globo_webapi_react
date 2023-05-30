@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 public interface IHouseRepository
 {
     Task<List<HouseDto>> GetAll();
+    Task<List<BidEntity>> getbids();
     Task<HouseDetailDto?> Get(int id);
     Task<HouseDetailDto> Add(HouseDetailDto house);
     Task<HouseDetailDto> Update(HouseDetailDto house);
@@ -35,6 +36,10 @@ public class HouseRepository : IHouseRepository
     public async Task<List<HouseDto>> GetAll()
     {
         return await context.Houses.Select(e => new HouseDto(e.Id, e.Address, e.Country, e.Price)).ToListAsync();
+    }
+    public async Task<List<BidEntity>> getbids()
+    {
+        return await context.Bids.Select(e => e).ToListAsync();
     }
 
     public async Task<HouseDetailDto?> Get(int id)

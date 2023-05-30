@@ -14,6 +14,7 @@ builder.Services.AddCors(options =>
 });
 builder.Services.AddDbContext<HouseDbContext>(options => options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking));
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
+builder.Services.AddScoped<IBidRepository, BidRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -78,6 +79,31 @@ app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseRepository repo
           await repo.Delete(houseId);
           return Results.Ok();
       }).ProducesProblem(404).Produces(StatusCodes.Status200OK);
+/*app.MapGet("/bids", async (IHouseRepository repo) =>
+{
+    return await repo.getbids();
+
+});*/
+
+app.MapGet("/house/{houseId:int}/bids", async (int houseId,
+            IHouseRepository houseRepo, IBidRepository bidRepo) =>
+        {
+            if (await houseRepo.Get(houseId) == null)
+                return Results.Problem($"House with Id {houseId} not found", statusCode: 404);
+            var bids = await bidRepo.Get(houseId);
+            return Results.Ok(bids);
+        }).ProducesProblem(404).Produces(StatusCodes.Status200OK);
+
+app.MapPost("/house/{houseId:int}/bids", async (int houseId, [FromBody] BidDto dto, IBidRepository repo) =>
+{
+    if (dto.HouseId != houseId)
+        return Results.Problem($"House Id of DTO {dto.HouseId} doesn't match with URL data {houseId}",
+            statusCode: StatusCodes.Status400BadRequest);
+    if (!MiniValidator.TryValidate(dto, out var errors))
+        return Results.ValidationProblem(errors);
+    var newBid = await repo.Add(dto);
+    return Results.Created($"/houses/{newBid.HouseId}/bids", newBid);
+}).ProducesValidationProblem().ProducesProblem(400).Produces<BidDto>(StatusCodes.Status201Created);
 
 app.Run();
 

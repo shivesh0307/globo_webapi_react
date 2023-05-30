@@ -67,3 +67,4 @@ C:\Users\Shivesh\Desktop\repo\react\globo\Api\obj\Debug\net7.0\refint\Api.dll
 C:\Users\Shivesh\Desktop\repo\react\globo\Api\obj\Debug\net7.0\Api.pdb
 C:\Users\Shivesh\Desktop\repo\react\globo\Api\obj\Debug\net7.0\Api.genruntimeconfig.cache
 C:\Users\Shivesh\Desktop\repo\react\globo\Api\obj\Debug\net7.0\ref\Api.dll
+C:\Users\Shivesh\Desktop\repo\react\globo\Api\bin\Debug\net7.0\MiniValidation.dll
