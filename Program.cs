@@ -27,7 +27,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseCors("MyPolicy");
 
-app.MapGet("/houses", (IHouseRepository repo) =>
+/*app.MapGet("/houses", (IHouseRepository repo) =>
 {
     return repo.GetAll();
 }).Produces<HouseDto[]>(StatusCodes.Status200OK);
@@ -58,7 +58,7 @@ app.MapPost("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository re
     Console.WriteLine(Request);
 
 
-});*/
+});
 
 app.MapPut("/houses", async ([FromBody] HouseDetailDto dto, IHouseRepository repo) =>
 {
@@ -79,11 +79,11 @@ app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseRepository repo
           await repo.Delete(houseId);
           return Results.Ok();
       }).ProducesProblem(404).Produces(StatusCodes.Status200OK);
-/*app.MapGet("/bids", async (IHouseRepository repo) =>
+app.MapGet("/bids", async (IHouseRepository repo) =>
 {
     return await repo.getbids();
 
-});*/
+});
 
 app.MapGet("/house/{houseId:int}/bids", async (int houseId,
             IHouseRepository houseRepo, IBidRepository bidRepo) =>
@@ -104,6 +104,10 @@ app.MapPost("/house/{houseId:int}/bids", async (int houseId, [FromBody] BidDto d
     var newBid = await repo.Add(dto);
     return Results.Created($"/houses/{newBid.HouseId}/bids", newBid);
 }).ProducesValidationProblem().ProducesProblem(400).Produces<BidDto>(StatusCodes.Status201Created);
+*/
 
+
+app.MapHouseEndpoints();
+app.MapBidEndpoints();
 app.Run();
 
